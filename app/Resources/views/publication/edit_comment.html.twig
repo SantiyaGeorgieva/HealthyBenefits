@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <fieldset>
+                <legend>Edit comment</legend>
+                <form class=form-horizontal" method="POST">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label text-right" for="comment_content">Comment:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" rows="5" id="comment_content" name="comment[content]">{{ comment.content }}</textarea>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-5 col-sm-offset-5 text-right">
+                            <br>
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
+{% endblock %}
+

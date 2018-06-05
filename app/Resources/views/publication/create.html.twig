@@ -1,0 +1,95 @@
+{#{{ include('user/profile.html.twig') }}#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Create publication{% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+
+            <form class="form-horizontal" enctype="multipart/form-data" action= "{{ path('publication_create') }}" method="POST">
+                <fieldset>
+                    <legend>New publication</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="publication_title">Post Title</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="publication_title" placeholder="Post Title"
+                                   name="publication[title]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="publication_content">Content</label>
+                        <div class="col-sm-6">
+                        <textarea class="form-control" rows="6" id="publication_content"
+                                  name="publication[content]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="publication_image">Image file</label>
+                        <div class="col-sm-4">
+                            <input type="file" accept=".jpg, .jpeg, .png" class="form-control" id="publication_image"
+                                 name="image"/>
+                        </div>
+                    </div>
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-sm-4 control-label" for="publication_picture">Picture url</label>#}
+                        {#<div class="col-sm-4">#}
+                            {#<input type="text" class="form-control" id="publication_picture"#}
+                                   {#name="publication[picture_url]" />#}
+                        {#</div>#}
+                    {#</div>#}
+
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="publication_criteria">Criteria</label>
+                        <div id="criteria" class="col-sm-4">
+                            <select class="foods" name="publication[criteria]">
+                                <option value="news">News</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="food">Food</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="form_criteria" class="form-group">
+
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('user_profile') }}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Create</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <script>
+        $("#criteria select").change(function () {
+            $('#form_criteria').empty();
+            if ($(this).val()== 'food'){
+                let criteria_food = $(`
+                    <label class="col-sm-4 control-label" for="publication_criteria_food">Food criteria</label>
+                        <div class="col-sm-4">
+                            <select name="publication[criteria_food]">
+                                <option value="salads">Salads</option>
+                                <option value="fresh">Fresh</option>
+                                <option value="smoothies">Smoothies</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    `);
+            $('#form_criteria').append(criteria_food);
+            }
+        });
+    </script>
+
+{% endblock %}
+

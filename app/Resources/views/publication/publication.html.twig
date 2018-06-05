@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ publication.title }} {% endblock %}
+
+{% block main %}
+
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                    <article>
+                        <header class="publication_header">
+                            <h1>{{ publication.title }}</h1>
+                        </header>
+                        <div class="col-md-6 nopadding">
+                            <p class="publication_text">
+                                {{ publication.content }}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{ asset('uploads/images/publications/' ~ publication.image ) }}" alt="picture" class="img-responsive publication_pic"/>
+                        </div>
+                        {% if app.user or publication.author == null %}
+                            <div class="col-md-12 nopadding">
+                                <small class="author">
+                                    {% if (app.getUser().isAuthor(publication)) %}
+                                        <a href="{{ path('user_profile') }}">{{ publication.author }}</a>
+                                    {% else %}
+                                        <a href="{{ path('profile', {'authorId': publication.authorId, 'id': publication.id}) }}">{{ publication.author }}</a>
+                                    {% endif %}
+                                </small>
+                        {% endif %}
+                            {% if not app.user %}
+                                <div class="col-md-12 nopadding">
+                                    <small class="author">
+                                        <a href="{{ path('security_login') }}">{{ publication.author }}</a>
+                                    </small>
+                            {% endif %}
+                                <div class="publication_date">
+                                    {{ publication.dateAdded is empty ? "" : publication.dateAdded|date('d-m-Y', 'Europe/Sofia') }}
+                                </div>
+                                <span class="publication_eye"><span class="publication_view">{{ publication.viewCount }}</span></span>
+                                    <div>
+                                        {% if app.user %}
+                                        <a href="{{ path('publication_like', {'id': publication.id}) }}">
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                        </a>
+                                        {% else %}
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                        {% endif %}
+                                            <span class="publication_date">&nbsp; {{ likes }}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </article>
+                <div class="col-md-9">
+                <br>
+                <br>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6">
+                            <h3 class="comments">Comments ( {{ comments|length }} )</h3>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                        {% if app.getUser() %}
+                            <button class="btn-comment" id="btn_comment">
+                                <span style="text-align: center">add a comment</span>
+                            </button>
+                        {% else %}
+                            <button class="btn-comment" id="btn_comment_login">
+                                <span style="text-align: center">add a comment</span>
+                            </button>
+                        {% endif %}
+                        </div>
+                    </div>
+                <hr class="line-comment">
+                <br>
+                    <div class="col-md-9" id="form_comment" style="padding-left: 0px;">
+
+                    </div>
+                    <div class="col-md-9" id="login_comment">
+
+                    </div>
+                <br>
+                    {% set count = myCount+1 %}
+                    {% for comment in comments %}
+                     <div class="col-md-12" style="padding-left: 0">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="thumbnail">
+                                    <img class="img-responsive user-photo" src="{{ asset('uploads/images/users/' ~ comment.userComment.image )  }}">
+                                </div>
+                            </div>
+                             <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {% if app.user == null %}
+                                                    <strong>{{ comment.userComment }}</strong>
+                                                {% elseif (app.getUser().isAuthorComment(comment)) %}
+                                                    <a href="{{ path('user_profile') }}"><strong>{{ comment.userComment }}</strong></a>
+                                                {% else %}
+                                                <a href="{{ path('profile', {'authorId': comment.userId, 'id': comment.publicationId }) }}">
+                                                    <strong>{{ comment.userComment }}</strong>
+                                                </a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <span style="font-style: oblique;">{{ comment.dateAdded is empty ? "" : comment.dateAdded|date('F d, Y', 'Europe/Sofia') }} at {{ comment.dateAdded is empty ? "" : comment.dateAdded|date('h:m A', 'Europe/Sofia') }}</span>
+                                            </div>
+                                        </div>
+                                        {% set count = count-1 %}
+                                            <div># {{ count }}</div>
+                                    </div>
+                                        <div class="panel-body">
+                                          {{ comment.content }}
+
+                                            <div class="row text-right">
+                                                {% if app.user == null %}
+                                                {% elseif (app.user != null and app.getUser().isAuthorComment(comment)) or (app.getUser().isSuperAdmin() or app.getUser().isAdmin()) %}
+                                                    <a class="btn-comment-edit btn-xs" href="{{ path('comment_edit', {'id':comment.id }) }}">Edit</a>
+                                                    <a class="btn-comment-edit btn-xs delete-post">Delete</a>
+                                                    <div class="modal fade">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                 <div class="modal-header text-left">
+                                                                    <h4 class="modal-title">Delete comment</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                 </div>
+                                                                 <div class="modal-body text-left">
+                                                                     <h5> Are you sure your want to delete this comment ?</h5>
+                                                                 </div>
+                                                                 <div class="modal-footer">
+                                                                    <a href="{{ path('comment_confirm_delete', {'id': comment.id}) }}"><button type="button" class="btn btn-danger">Yes</button></a>
+                                                                    <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel panel-default -->
+                <br>
+                <br>
+                             </div><!-- /col-sm-5 -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+            <script>
+
+                let formComment =
+                    $(`<form action="{{ path('publication_view' , {'id' :  publication.id}) }}" method="POST">
+
+                <div class="col-sm-10">
+                    <textarea class="comment-textarea" rows="5" id="comment_content" name="comment[content]" placeholder="Write your comment here..."></textarea>
+                    {#<input type="hidden" value="{{ publication.id }}" id="publicationId" />#}
+                </div>
+
+                {{ form_row(form._token) }}
+
+                <div class="col-sm-12 text-right" style="transform: translateX(-21.5%);padding-right: 0px;padding-left: 0px;">
+                    <button type="submit" class="btn-comment-add">Add</button>
+                </div>
+            </form>`);
+
+                $('#form_comment').append(formComment);
+                $('#form_comment').hide();
+
+                $('#btn_comment').on('click', function (e) {
+                    e.preventDefault();
+                    $('#form_comment').toggle();
+                });
+
+                let loginComment =
+                    $(`<div class="textarea_error">You need to <a href="{{ path('security_login') }}">Login</a> or <a href="{{ path('user_register') }}">Register</a> to post a comment</div>`);
+
+                $('#login_comment').append(loginComment);
+                $('#login_comment').hide();
+
+                $('#btn_comment_login').on('click', function (e) {
+                    e.preventDefault();
+                    $('#login_comment').toggle();
+                });
+
+            </script>
+
+{% endblock %}
+

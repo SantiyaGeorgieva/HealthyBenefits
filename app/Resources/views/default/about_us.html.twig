@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Healthy benefits - About us {% endblock %}
+
+{% block main %}
+
+<div class="container main" style="margin-bottom: 105px;">
+    <div class="row">
+        <div class="col-md-9">
+            {% if (app.getUser() and app.getUser().isSuperAdmin()) %}
+                <p> {{ about.content }} </p>
+                <a href="{{ path('about_us_edit', {id: about.id }) }}" class="btn btn-default btn-xs">Edit</a>
+            {% else %}
+                <p> {{ about.content }} </p>
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div class="row more-marg">
+                <div class="col-md-12 newsletter-margin">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="thumbnail center well well-sm newsletter text-center">
+                                <h2>Newsletter</h2>
+                                <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                                <form action="{{ path('news_letter')}}" method="POST">
+                                    <input type="hidden" name="url" value="about_us">
+                                    <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                        {% if app.user %}
+                                            <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                            <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                        {% else %}
+                                            <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                            <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                        {% endif %}
+                                    </div>
+                                    <button type="submit" class="button raised hoverable">
+                                        <div class="anim"></div><span>Subscribe</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Edit content of page about us {% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            {#{% for about in abouts %}#}
+            <form class="form-horizontal" action="{{ path('about_us_edit', { 'id': about.id }) }}" method="POST">
+                <fieldset>
+                    <legend>Edit about us</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="about_content">Content</label>
+                        <div class="col-sm-4 ">
+                            <textarea class="form-control" id="about_content" rows="10"
+                                      name="about_us[content]"> {{ about.content }}
+                            </textarea>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('about_us', {id: about.id }) }}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Edit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            {#{% endfor %}#}
+        </div>
+    </div>
+
+{% endblock %}
+

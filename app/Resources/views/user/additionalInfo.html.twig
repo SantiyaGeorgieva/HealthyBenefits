@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Account settings {% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post">
+                <fieldset>
+                    <legend>Account settings</legend>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_username">Username</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" value="{{ user.username }}" id="user_username" placeholder="Username" name="user[username]" required="required" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_email">Email</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" value="{{ user.email }}" id="user_email" placeholder="Email" name="user[email]" required="required" type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_fullName">Full Name</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" value="{{ user.fullName }}" id="user_fullName" placeholder="Full Name" name="user[fullName]" required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Change Password</label>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger" id="changePass">
+                                Change
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="pass">
+
+                    </div>
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-sm-4 control-label" for="user_picture">Picture URL</label>#}
+                        {#<div class="col-sm-4 ">#}
+                            {#<input class="form-control" id="user_picture" placeholder="Picture URL" name="pictureUrl" type="text">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="publication_image">Image file</label>
+                        <div class="col-sm-4">
+                            <input type="file" accept=".jpg, .jpeg, .png" class="form-control" id="publication_image"
+                                   name="image"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_describe">Subscribe Yourself</label>
+                        <div class="col-sm-4 ">
+                            <textarea class="form-control" placeholder="Subscribe" name="info" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('blog_index') }}">Cancel</a>
+                            <button type="submit" class="btn btn-warning">Submit</button>
+                        </div>
+                    </div>
+
+                    {{  form_row(form._token) }}
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        let pass = $(`
+        <div class="form-group">
+                    <label class="col-sm-4 control-label" for="authors_password_first">New Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="authors_password_first" placeholder="Password" name="pass_first">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="authors_password_second">Confirm Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="authors_password_second" placeholder="Password" name="pass_second">
+                    </div>
+                </div>
+        `);
+
+        $("#pass").append(pass);
+        $("#pass").hide();
+        $("#changePass").click(function (e) {
+            e.preventDefault();
+            $("#pass").toggle();
+        });
+    </script>
+
+{% endblock %}

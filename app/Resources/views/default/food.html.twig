@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Healthy benefits - Food {% endblock %}
+
+{% block main %}
+
+    <div class="container main">
+        <div class="row">
+            <div class="col-md-9">
+                <a href="#" class="header-article"><h2 class="header-article">Salads</h2></a>
+                <div class="row">
+                    {% for salad in salads %}
+                    <div class="col-md-4 littleImg">
+                        <article>
+                            <figure class="article__image">
+                                <a>
+                                    <img src="{{ asset('uploads/images/publications/' ~ salad.image) }}" alt="salad_picture" class="img-responsive"/>
+                                </a>
+                            </figure>
+                            <div class="article__content">
+                                <div class="article__entry">
+                                    <h3>{{ salad.title }}</h3>
+                                    <span>by {{ salad.author }}</span>
+                                </div>
+                                <div class="article__actions">
+                                    <a href="{{ path('publication_view', {'id':salad.id}) }}" class="btn btn-reverse btn-arrow">
+                                        <span>Read more<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.1 25.8" enable-background="new 0 0 36.1 25.8" xml:space="preserve"><g><line fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" x1="0" y1="12.9" x2="34" y2="12.9"></line><polyline fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" points="22.2,1.1 34,12.9 22.2,24.7   "></polyline></g></svg></span>
+                                    </a>
+                                    <div class="share-button sharer shere-button-news">
+                                        <a href="javascript:void(0)" class="share-btn">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="social top center networks-5 ">
+                                            <!-- Facebook Share Button -->
+                                            <a class="fbtn share facebook" href="https://www.facebook.com/sharer/sharer.php?u=url"><i class="fa fa-facebook"></i></a>
+                                            <!-- Google Plus Share Button -->
+                                            <a class="fbtn share twitter" href="https://twitter.com/intent/tweet?text=title&amp;url=url&amp;via=creativedevs"><i class="fa fa-twitter"></i></a>
+                                            <!-- Pinterest Share Button -->
+                                            <a class="fbtn share gplus" href="https://plus.google.com/share?url=url"><i class="fa fa-google-plus"></i></a>
+                                            <!-- Instagram Share Button -->
+                                            <a class="fbtn share instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                            <!-- Twitter Share Button -->
+                                            <a class="fbtn share pinterest" href="https://pinterest.com/pin/create/button/?url=url&amp;description=data&amp;media=image"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr class="line-article diffrend2">
+                <a href="#" class="header-article"><h2 class="header-article">Fresh</h2></a>
+                <div class="row">
+                    {% for juice in fresh %}
+                        <div class="col-md-4 littleImg">
+                            <article>
+                                <figure class="article__image">
+                                    <a>
+                                        <img src="{{ asset('uploads/images/publications/' ~ juice.image) }}" alt="juice_picture" class="img-responsive"/>
+                                    </a>
+                                </figure>
+                                <div class="article__content">
+                                    <div class="article__entry">
+                                        <h3>{{ juice.title }}</h3>
+                                        <span>by {{ juice.author }}</span>
+                                    </div>
+                                    <div class="article__actions">
+                                        <a href="{{ path('publication_view', {'id':juice.id}) }}" class="btn btn-reverse btn-arrow">
+                                            <span>Read more<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.1 25.8" enable-background="new 0 0 36.1 25.8" xml:space="preserve"><g><line fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" x1="0" y1="12.9" x2="34" y2="12.9"></line><polyline fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" points="22.2,1.1 34,12.9 22.2,24.7   "></polyline></g></svg></span>
+                                        </a>
+                                        <div class="share-button sharer shere-button-news">
+                                            <a href="javascript:void(0)" class="share-btn">
+                                                <i class="fa fa-share" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="social top center networks-5 ">
+                                                <!-- Facebook Share Button -->
+                                                <a class="fbtn share facebook" href="https://www.facebook.com/sharer/sharer.php?u=url"><i class="fa fa-facebook"></i></a>
+                                                <!-- Google Plus Share Button -->
+                                                <a class="fbtn share twitter" href="https://twitter.com/intent/tweet?text=title&amp;url=url&amp;via=creativedevs"><i class="fa fa-twitter"></i></a>
+                                                <!-- Pinterest Share Button -->
+                                                <a class="fbtn share gplus" href="https://plus.google.com/share?url=url"><i class="fa fa-google-plus"></i></a>
+                                                <!-- Instagram Share Button -->
+                                                <a class="fbtn share instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                                <!-- Twitter Share Button -->
+                                                <a class="fbtn share pinterest" href="https://pinterest.com/pin/create/button/?url=url&amp;description=data&amp;media=image"><i class="fa fa-pinterest"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr class="line-article diffrend2">
+                <a href="#" class="header-article"><h2 class="header-article">Smoothies</h2></a>
+                <div class="row">
+                    {% for smoothie in smoothies %}
+                        <div class="col-md-4 littleImg">
+                            <article>
+                                <figure class="article__image">
+                                    <a>
+                                        <img src="{{ asset('uploads/images/publications/' ~ smoothie.image) }}" alt="smoothie_picture" class="img-responsive"/>
+                                    </a>
+                                </figure>
+                                <div class="article__content">
+                                    <div class="article__entry">
+                                        <h3>{{ smoothie.title }}</h3>
+                                        <span>by {{ smoothie.author }}</span>
+                                    </div>
+                                    <div class="article__actions">
+                                        <a href="{{ path('publication_view', {'id':smoothie.id}) }}" class="btn btn-reverse btn-arrow">
+                                            <span>Read more<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.1 25.8" enable-background="new 0 0 36.1 25.8" xml:space="preserve"><g><line fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" x1="0" y1="12.9" x2="34" y2="12.9"></line><polyline fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" points="22.2,1.1 34,12.9 22.2,24.7   "></polyline></g></svg></span>
+                                        </a>
+                                        <div class="share-button sharer shere-button-news">
+                                            <a href="javascript:void(0)" class="share-btn">
+                                                <i class="fa fa-share" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="social top center networks-5 ">
+                                                <!-- Facebook Share Button -->
+                                                <a class="fbtn share facebook" href="https://www.facebook.com/sharer/sharer.php?u=url"><i class="fa fa-facebook"></i></a>
+                                                <!-- Google Plus Share Button -->
+                                                <a class="fbtn share twitter" href="https://twitter.com/intent/tweet?text=title&amp;url=url&amp;via=creativedevs"><i class="fa fa-twitter"></i></a>
+                                                <!-- Pinterest Share Button -->
+                                                <a class="fbtn share gplus" href="https://plus.google.com/share?url=url"><i class="fa fa-google-plus"></i></a>
+                                                <!-- Instagram Share Button -->
+                                                <a class="fbtn share instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                                <!-- Twitter Share Button -->
+                                                <a class="fbtn share pinterest" href="https://pinterest.com/pin/create/button/?url=url&amp;description=data&amp;media=image"><i class="fa fa-pinterest"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr class="line-article1 diffrend3">
+                <button id="go-to-top_food">back to top</button>
+                <hr class="line-article1">
+            </div>
+            <div class="col-md-3 newsletter-margin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="thumbnail center well well-sm newsletter text-center">
+                            <h2>Newsletter</h2>
+                            <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                            <form action="{{ path('news_letter')}}" method="POST">
+                                <input type="hidden" name="url" value="food">
+                                <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                    {% if app.user %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                    {% else %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="button raised hoverable">
+                                    <div class="anim"></div><span>Subscribe</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer_images clearfix">
+            <div class="col-md-3">
+                <a href="{{ path('publication_view', {'id':11}) }}" class="reactangle gradient">
+                    <div>
+                        <svg class="img-healty_property images1"></svg>
+                    </div>
+                    <h3>Healing properties</h3>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{ path('publication_view', {'id':12}) }}" class="reactangle gradient">
+                    <div>
+                        <svg class="img-spices images1"></svg>
+                    </div>
+                    <h3>5 important spices</h3>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{ path('publication_view', {'id':13}) }}" class="reactangle gradient">
+                    <div>
+                        <svg class="img-junkfood images1"></svg>
+                    </div>
+                    <h3>Bad habits and ways to remove them</h3>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{ path('publication_view', {'id':18}) }}" class="reactangle gradient">
+                    <div>
+                        <svg class="img-waterlife images1"></svg>
+                    </div>
+                    <h3>Water as a source of life</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

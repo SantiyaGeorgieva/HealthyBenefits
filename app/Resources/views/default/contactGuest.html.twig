@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Contact guest {% endblock %}
+
+    {% block main %}
+
+        <div class="container main">
+            <div class="row">
+                <div class="col-md-8">
+                        <form id="contactForm" method="post" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Your Email</label>
+                                <div class="col-xs-8 col-md-6">
+                                    <input type="text" class="form-control" name="message[email]"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Send To</label>
+                                <div class="col-xs-8 col-md-6">
+                                    <select name="contacts" class="form-control" disabled>
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">About</label>
+                                <div class="col-xs-8 col-md-6">
+                                    <input type="text" class="form-control" name="message[about]" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Message</label>
+                                <div class="col-xs-8 col-md-6">
+                                    <textarea class="form-control" name="message[content]" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <!-- #messages is where the messages are placed inside -->
+                            <div class="form-group">
+                                <div class="col-xs-9 col-xs-offset-3">
+                                    <div id="messages"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-9 col-xs-offset-3">
+                                    <button id="btn_comment_login" class="btn btn-default contact_send">Send</button>
+                                </div>
+                            </div>
+                            <br>
+                            <hr class=line-article>
+                            <div class="col-md-12" id="login_comment">
+
+                            </div>
+                        </form>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail center well well-sm newsletter text-center">
+                        <h2>Newsletter</h2>
+                        <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                        <form action="{{ path('news_letter')}}" method="POST">
+                            <input type="hidden" name="url" value="contact">
+                            <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                {% if app.user %}
+                                    <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                    <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                {% else %}
+                                    <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                    <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="button raised hoverable">
+                                <div class="anim"></div><span>Subscribe</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let loginComment =
+                $(`<div class="textarea_error">You need to <a href="{{ path('security_login') }}">Login</a> or <a href="{{ path('user_register') }}">Register</a> to contact with us</div>`);
+
+            $('#login_comment').append(loginComment);
+            $('#login_comment').hide();
+
+            $('#btn_comment_login').on('click', function (e) {
+                e.preventDefault();
+                $('#login_comment').toggle();
+            });
+        </script>
+
+{% endblock %}
+
+

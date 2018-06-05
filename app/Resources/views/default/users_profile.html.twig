@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profile of {{ author.fullName }} {% endblock %}
+
+{% block main %}
+
+    <div class="container main">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row row_custom">
+                    <div class="col-md-12">
+                        <a href="{{ path('user_profile', {'id': user.id}) }}">
+                            <img src="{{ asset('uploads/images/users/' ~ author.image ) }}" width="350px" height="370px"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 newsletter-margin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="thumbnail center well well-sm newsletter text-center">
+                            <h2>Newsletter</h2>
+                            <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                            <form action="{{ path('news_letter')}}" method="POST">
+                                <input type="hidden" name="url" value="users_profile">
+                                <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                    {% if app.user %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                    {% else %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="button raised hoverable">
+                                    <div class="anim"></div><span>Subscribe</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="profile-h3"><span class="slash">\</span> Contact me</h3>
+                    <hr class="line-user">
+                    <form id="contactForm" method="post" class="form-horizontal">
+                        <div class="col-md-4 form-line">
+                            <div class="form-group">
+                                <label for="exampleInputEmail">Your email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail" name="message[email]" value="{{ user.email }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername">About</label>
+                                <input type="text" class="form-control" name="message[about]">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for ="description" class="user_form ">Your message</label>
+                                <textarea  class="form-control user_form" name="message[content]" rows="5"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-default user_button">Send</button>
+                            </div>
+                        </div>
+
+                        {{ form_row(form._token) }}
+
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {#<hr class="line-user">#}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="profile-h3"><span class="slash">\</span> About me</h3>
+                            <hr class="line-user">
+                            <p>{{ author.fullName }}</p>
+                            <p>{{ author.email }}</p>
+                            <p>{{ author.info }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="profile-h3"><span class="slash">\</span> Social life</h3>
+                            <hr class="line-user">
+                            <h5 class="follow_me">Follow me</h5>
+                            <ul class="socialSharing_icons">
+                                <li><a href="https://www.facebook.com/" title="" ><i class="fa entypo-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://twitter.com/twitter?lang=en/" title="" ><i class="fa entypo-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/" title="" ><i class="fa entypo-instagrem" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.pinterest.com/" title="" ><i class="fa entypo-pinterest" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container body-content">
+                        <div class="row">
+                            <h3 class="profile-h3"><span class="slash">\</span> Publications by me</h3>
+                            <hr class="line-user">
+                            {% for publication in publications %}
+                                <div class="col-md-4">
+                                        <a href="{{ path('publication_view', {'id': publication.id}) }}">
+                                            <h4 class="black">{{ publication.title }}</h4>
+                                        </a>
+                                        {% if (app.getUser().isAdmin()) %}
+                                            <a class="btn btn-default btn-xs" href="{{ path('admin_edit', {'id' :  publication.id}) }}">Edit &raquo;</a>
+                                            <a class="btn btn-default btn-xs delete-post">Delete</a>
+                                            <div class="modal fade">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Delete publication</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <h5> Are you sure your want to delete this publication ?</h5>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="{{ path('admin_confirm_delete', {'id': publication.id}) }}"><button type="button" class="btn btn-primary">Yes</button></a>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

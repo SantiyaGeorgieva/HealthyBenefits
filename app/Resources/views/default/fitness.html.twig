@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Healthy benefits - Fitness {% endblock %}
+
+{% block main %}
+
+    <div class="container main">
+        <div class="row">
+            <div class="col-md-8">
+                <a href="{{ path('fitness') }}" class="header-article"><h2>Fitness</h2></a>
+                <div class="row">
+                    {% for fit in fitness %}
+                    <div class="col-md-6">
+                        <article class="article">
+                            <figure class="article__image">
+                                <a href="#" class="images">
+                                    <img src="{{ asset('uploads/images/publications/' ~ fit.image ) }}" alt="fitness_picture" class="img-responsive"/>
+                                </a>
+                            </figure>
+                            <div class="article__content">
+                                <div class="article__entry">
+                                    <h3>{{ fit.title }}</h3>
+                                    <span>by {{ fit.author }}</span>
+                                </div>
+                                <div class="article__actions">
+                                    <a href="{{ path('publication_view', {'id':fit.id}) }}" class="btn btn-reverse btn-arrow">
+                                        <span>Read more<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.1 25.8" enable-background="new 0 0 36.1 25.8" xml:space="preserve"><g><line fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" x1="0" y1="12.9" x2="34" y2="12.9"></line><polyline fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" points="22.2,1.1 34,12.9 22.2,24.7   "></polyline></g></svg></span>
+                                    </a>
+                                    <div class="share-button sharer shere-button-news">
+                                        <a href="javascript:void(0)" class="share-btn">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="social top center networks-5 ">
+                                            <!-- Facebook Share Button -->
+                                            <a class="fbtn share facebook" href="https://www.facebook.com/sharer/sharer.php?u=url"><i class="fa fa-facebook"></i></a>
+                                            <!-- Google Plus Share Button -->
+                                            <a class="fbtn share twitter" href="https://twitter.com/intent/tweet?text=title&amp;url=url&amp;via=creativedevs"><i class="fa fa-twitter"></i></a>
+                                            <!-- Pinterest Share Button -->
+                                            <a class="fbtn share gplus" href="https://plus.google.com/share?url=url"><i class="fa fa-google-plus"></i></a>
+                                            <!-- Instagram Share Button -->
+                                            <a class="fbtn share instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                            <!-- Twitter Share Button -->
+                                            <a class="fbtn share pinterest" href="https://pinterest.com/pin/create/button/?url=url&amp;description=data&amp;media=image"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr class="line-article diffrend2">
+                <div class="row">
+                    {% for fit in fitness1 %}
+                    <div class="col-md-4 littleImg">
+                        <article>
+                            <figure class="article__image">
+                                <a href="#" class="images1">
+                                    <img src="{{ asset('uploads/images/publications/' ~ fit.image) }}" alt="fitness_picture" class="img-responsive"/>
+                                </a>
+                            </figure>
+                            <div class="article__content">
+                                <div class="article__entry">
+                                    <h3>{{ fit.title }}</h3>
+                                    <span>by {{ fit.author }}</span>
+                                </div>
+                                <div class="article__actions">
+                                    <a href="{{ path('publication_view', {'id':fit.id}) }}" class="btn btn-reverse btn-arrow">
+                                        <span>Read more<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.1 25.8" enable-background="new 0 0 36.1 25.8" xml:space="preserve"><g><line fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" x1="0" y1="12.9" x2="34" y2="12.9"></line><polyline fill="none" stroke="#9ec747" stroke-width="3" stroke-miterlimit="10" points="22.2,1.1 34,12.9 22.2,24.7   "></polyline></g></svg></span>
+                                    </a>
+                                    <div class="share-button sharer shere-button-news">
+                                        <a href="javascript:void(0)" class="share-btn">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="social top center networks-5 ">
+                                            <!-- Facebook Share Button -->
+                                            <a class="fbtn share facebook" href="https://www.facebook.com/sharer/sharer.php?u=url"><i class="fa fa-facebook"></i></a>
+                                            <!-- Google Plus Share Button -->
+                                            <a class="fbtn share twitter" href="https://twitter.com/intent/tweet?text=title&amp;url=url&amp;via=creativedevs"><i class="fa fa-twitter"></i></a>
+                                            <!-- Pinterest Share Button -->
+                                            <a class="fbtn share gplus" href="https://plus.google.com/share?url=url"><i class="fa fa-google-plus"></i></a>
+                                            <!-- Instagram Share Button -->
+                                            <a class="fbtn share instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                            <!-- Twitter Share Button -->
+                                            <a class="fbtn share pinterest" href="https://pinterest.com/pin/create/button/?url=url&amp;description=data&amp;media=image"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+                </div>
+                <hr class="line-article diffrend2">
+            </div>
+            <div class="col-md-4 newsletter-margin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="thumbnail center well well-sm newsletter text-center">
+                            <h2>Newsletter</h2>
+                            <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                            <form action="{{ path('news_letter')}}" method="POST">
+                                <input type="hidden" name="url" value="fitness">
+                                <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                    {% if app.user %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                    {% else %}
+                                        <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                        <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="button raised hoverable">
+                                    <div class="anim"></div><span>Subscribe</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

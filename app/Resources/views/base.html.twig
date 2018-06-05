@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Healthy benefits{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="http://weloveiconfonts.com/api/?family=entypo" rel="stylesheet" type="text/css"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+              integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+        {#<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">#}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+
+{% block header %}
+
+    <div class="container">
+        <div class="row more-margin-top">
+            <div class="col-xs-2 col-md-3">
+                <ul class="leffting">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle grey" data-toggle="dropdown">
+                            <span>EN</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">BG</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-7 col-md-6 nopadding">
+                <a href="{{ path('blog_index') }}">
+                    <img src="{{ asset('images/logo6.png') }}" class="img-responsive" alt="Brand"/>
+                </a>
+            </div>
+            <div class="col-xs-2 col-md-3 text-right">
+                {% set route = app.request.attributes.get('_route') %}
+                <ul class="nav navbar-right">
+                    {% if app.user %}
+                        <li>
+                            <a href="{{ path('user_profile') }}" {{ route ==  'user_profile' ? 'class="green"' }}>
+                                {{ user.username }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('security_logout') }}" {{ route ==  'security_logout' ? 'class="green"' }}>
+                                Logout
+                            </a>
+                        </li>
+                        {% if (app.getUser() and app.getUser().isAdmin() or app.getUser().isSuperAdmin()) %}
+                            <li>
+                                <a href="{{ path('admin_panel') }}" {{ route ==  'admin_panel' ? 'class="green"' }}>
+                                    Admin panel
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <div class="col-xs-1 col-md-3 text-right">
+                            <a href="#" data-toggle="modal" id="btn_login" data-target="#login-modal" class="register">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="container">
+                                    <form class="signUp form" action="{{ path('user_register') }}" method="post">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h3>Create Your Account</h3>
+                                        <p>Just enter your email address<br>
+                                            and your password for join.
+                                        </p>
+                                        <input type="text" name="user[username]" placeholder="Username"
+                                               required="required"/>
+                                        <input type="email" name="user[email]" placeholder="Email"
+                                               required="required" autocomplete="off"/>
+                                        <input type="text" name="user[fullName]" placeholder="Fullname"
+                                               required="required"/>
+                                        <input type="password" name="user[password][first]"
+                                               placeholder="Password" required="required"/>
+                                        <input type="password" name="user[password][second]"
+                                               placeholder="Verify password" required="required"/>
+
+                                        {{ form_row(form._token) }}
+
+                                        <button class="form-btn sx log-in" id="signIn" type="button">Log In</button>
+                                        <button class="form-btn dx" type="submit">Sign Up</button>
+
+                                    </form>
+                                    <form class="signIn form" action="{{ path('security_login') }}" method="post">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h3>Welcome<br>Back !</h3>
+                                        <div class="col-sm-12">
+                                            {% include ('flash_message.html.twig') %}
+                                        </div>
+                                        <!-- <button class="fb" type="button">Log In With Facebook</button>
+                                        <p>- or -</p> -->
+                                        <input type="email" name="_username" placeholder="Email"
+                                               autocomplete="off" required="required"/>
+                                        <input type="password" name="_password" placeholder="Password"
+                                               required="required"/>
+                                        <input type="hidden" name="_csrf_token"
+                                               value="{{ csrf_token('authenticate') }}"/>
+                                        <input id="permitted" type="checkbox" class="unique">
+                                        <label for="permitted" class="side-label">Remember password</label>
+                                        <input id="permitted-forgotten" type="checkbox" class="unique">
+                                        <label for="permitted-forgotten" id="forgot-pass" class="side-label">Forgotten
+                                            password ?</label>
+                                        <button class="form-btn sx back" type="button">Back</button>
+                                        <button class="form-btn dx" type="submit">Log In</button>
+
+                                    </form>
+                                    <div class="modal" id="pass-modal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                                        <div class="container">
+                                            <form class="form">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;
+                                                </button>
+                                                <h3>Forgotten password</h3>
+                                                <p>Enter your credentials<br>
+                                                    for change your password.
+                                                </p>
+                                                <input type="email" placeholder="Email" required="required"
+                                                       autocomplete="off"/>
+                                                <input type="password" placeholder="New password" required="required"/>
+                                                <input type="password" placeholder="Verify password" required="required"/>
+                                                <button id="send" type="submit" value="Submit">Send</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#<li>#}
+                        {#<a href="{{ path('user_register') }}" {{ route ==  'user_register' ? 'class="green"' }}>#}
+                        {#Register#}
+                        {#</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                        {#<a href="{{ path('security_login') }}" {{ route ==  'security_login' ? 'class="green"' }}>#}
+                        {#Login#}
+                        {#</a>#}
+                        {#</li>#}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-menu">
+        <header class="bs-docs-nav navbar navbar-static-top">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <!-- <a href="#"><img src="http://via.placeholder.com/200x100" alt="Brand"></a> -->
+                        <button aria-controls="bs-navbar" aria-expanded="false" id="mytoggle"
+                                class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse"
+                                type="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- </nav> -->
+                <nav class="collapse navbar-collapse" id="bs-navbar">
+                    {% set route = app.request.attributes.get('_route') %}
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('blog_index') }}" {{ route ==  'blog_index' ? 'class="active"' }} title="">home</a>
+                        </li>
+                        <li><a href="{{ path('news') }}" {{ route ==  'news' ? 'class="active"' }} title="">news</a>
+                        </li>
+                        <li><a href="{{ path('fitness') }}" {{ route ==  'fitness' ? 'class="active"' }} title="">fitness</a>
+                        </li>
+                        <li><a href="{{ path('food') }}" {{ route ==  'food' ? 'class="active"' }} title="">food</a>
+                        </li>
+                        <li><a href="{{ path('about_us') }}" {{ route ==  'about_us' ? 'class="active"' }} title="">about
+                                us</a></li>
+                        <li><a href="{{ path('contact') }}" {{ route ==  'contact' ? 'class="active"' }} title="">contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </nav>
+        </header>
+    </div>
+{% endblock %}
+
+{#{% block body %}#}
+
+{% block main %}
+
+    {#{% if message is defined %}#}
+        {#<div class="message">{{ message }}</div>#}
+    {#{% endif %}#}
+
+{% endblock %}
+
+{#{% endblock %}#}
+
+{% block footer %}
+
+    <div class="footer-wrapper">
+        <div class="container">
+            <div class="row marg-bott">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <ul class="footer-menu">
+                        <li><a href="{{ path('blog_index') }}" title="">Home</a></li>
+                        <li><a href="{{ path('news') }}" title="">News</a></li>
+                        <li><a href="{{ path('fitness') }}" title="">Fitness</a></li>
+                        <li><a href="{{ path('food') }}" title="">Food</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <ul class="footer-menu">
+                        {#<input type="hidden" name="id: users.id " value="{{ ('about_us' 'id: users.id') }}">#}
+                        {#<input id="about_us" name="about_us" type="hidden" value="id: users.id">#}
+                        <li><a href="{{ path('about_us') }}" title="about_us">About us</a></li>
+                        <li><a href="{{ path('contact') }}" title="">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <ul class="socialSharing_icons">
+                        <li><a href="https://www.facebook.com/" title=""><i class="fa entypo-facebook"
+                                                                            aria-hidden="true"></i></a></li>
+                        <li><a href="https://twitter.com/twitter?lang=en/" title=""><i class="fa entypo-twitter"
+                                                                                       aria-hidden="true"></i></a></li>
+                        <li><a href="https://www.instagram.com/" title=""><i class="fa entypo-instagrem"
+                                                                             aria-hidden="true"></i></a></li>
+                        <li><a href="https://www.youtube.com/" title=""><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="https://plus.google.com/" title=""><i class="fa entypo-gplus"
+                                                                           aria-hidden="true"></i></a></li>
+                        <li><a href="https://www.pinterest.com/" title=""><i class="fa entypo-pinterest"
+                                                                             aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 leffting">
+                        <a href="{{ path('blog_index') }}"><img src="{{ asset('images/logo7.png') }}"
+                                                                class="img-responsive" alt="Brand"/></a>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 text-center">
+                        {{ 'now'|date('F Y') }} &copy; All right reserved
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 text-right">
+                        Created by Santiya
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %} Admin edit on user {{ authors.fullName }} {% endblock %}
+
+{% block main %}
+    {% if authors.admin %}
+        <div style="color: red">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <div class="container body-content span=8 offset=2" style="margin-bottom: 110px">
+        <div class="well">
+            <form class="form-horizontal" action="{{ path('admin_edit_user', {'user_id': authors.id}) }}" method="POST">
+                <fieldset>
+                    <legend>Edit user</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="authors_username">Username</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="authors_username" placeholder="Username"
+                                   name="user[username]" required value="{{ authors.username }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="authors_email">Email</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" id="authors_email" placeholder="Email" name="user[email]"
+                                   required type="email" value="{{ authors.email }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="authors_fullName">Full Name</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="authors_fullName" placeholder="Full Name"
+                                   name="user[fullName]" required value="{{ authors.fullName }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Change Password</label>
+                            <div class="col-sm-4 ">
+                                <button class="btn btn-danger" id="changePass">
+                                    Change
+                                </button>
+                            </div>
+                    </div>
+
+                    <div id="pass">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="select_roles">Select roles</label>
+                        <div class="col-sm-4">
+                            <select name="roles">
+                                <option value="ROLE_USER">User</option>
+                                <option value="ROLE_ADMIN">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('admin_panel') }}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Edit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let pass = $(`
+        <div class="form-group">
+                    <label class="col-sm-4 control-label" for="authors_password_first">New Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="authors_password_first" placeholder="Password" name="pass">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="authors_password_second">Confirm Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="authors_password_second" placeholder="Password" name="pass_confirm">
+                    </div>
+                </div>
+        `);
+
+        $("#pass").append(pass);
+        $("#pass").hide();
+        $("#changePass").click(function (e) {
+            e.preventDefault();
+            $("#pass").toggle();
+        });
+    </script>
+
+{% endblock %}
+

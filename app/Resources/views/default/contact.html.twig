@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body_id %}
+
+    {% block main %}
+
+        <div class="container main">
+            <div class="row">
+                <div class="col-md-8">
+
+                    {% if app.user %}
+                    <form id="contactForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Your Email</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input type="text" class="form-control" name="message[email]" value="{{ user.email }}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Send To</label>
+                            <div class="col-xs-8 col-md-6">
+                                <select name="contacts" class="form-control">
+                                    {% for contact in contacts %}
+                                        <option value="{{ contact.id }}">{{ contact.email }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">About</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input type="text" class="form-control" name="message[about]" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Message</label>
+                            <div class="col-xs-8 col-md-6">
+                                <textarea class="form-control" name="message[content]" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <!-- #messages is where the messages are placed inside -->
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <div id="messages"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <button type="submit" class="btn btn-default contact_send">Send</button>
+                            </div>
+                        </div>
+
+                        {{ form_row(form._token) }}
+
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail center well well-sm newsletter text-center">
+                        <h2>Newsletter</h2>
+                        <p>Subscribe to our weekly Newsletter and stay tuned</p>
+                        <form action="{{ path('news_letter')}}" method="POST">
+                            <input type="hidden" name="url" value="contact">
+                            <div class="input-group">
+                                    <span class="input-group-addon news_input">
+                                        <!-- <i class="fa fa-envelope"></i> -->
+                                    </span>
+                                {% if app.user %}
+                                    <input class="form-control" type="text" id="" name="newsName" placeholder="Name" value="{{ user.username }}"/>
+                                    <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com" value="{{ user.email }}"/>
+                                {% else %}
+                                    <input class="form-control" type="text" id="" name="newsName" placeholder="Name"/>
+                                    <input class="form-control" type="text" id="" name="newsEmail" placeholder="your@email.com"/>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="button raised hoverable">
+                                <div class="anim"></div><span>Subscribe</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endblock %}
+

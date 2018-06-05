@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create content{% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" action= "{{ path('about_us_create') }}" method="POST">
+                <fieldset>
+                    <legend>New Content</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="about_content">Content</label>
+                        <div class="col-sm-6">
+                        <textarea class="form-control" rows="6" id="about_content"
+                                  name="about_us[content]"></textarea>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('about_us', {id: user.id }) }}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Create</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

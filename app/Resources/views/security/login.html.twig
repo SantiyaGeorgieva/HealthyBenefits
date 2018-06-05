@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Login {% endblock %}
+
+
+{% block main %}
+
+    <script>
+        $(document).ready(function () {
+            let route =  $(this)[0].URL.substring($(this)[0].URL.lastIndexOf('/') + 1);
+
+            if(route === 'login') {
+                $("#btn_login").trigger("click");
+                $('#signIn').trigger("click");
+            }
+
+        });
+    </script>
+
+{% endblock %}
+

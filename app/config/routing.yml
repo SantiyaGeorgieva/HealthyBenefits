@@ -1,0 +1,8 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+user_list_roles:
+    path:     /get-usersroles-from-role
+    defaults: { _controller: "AppBundle:AdminController:listRolesOfRoleAction" }
+    methods:  GET
